@@ -1,0 +1,6 @@
+@ArcadeApi_HostAddress = http://localhost:5275
+
+GET {{ArcadeApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
