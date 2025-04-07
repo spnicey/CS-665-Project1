@@ -1,1 +1,21 @@
 *.db-journal
+secrets.json
+.vscode/
+
+#ASP.NET Core / EF Core
+*.user
+*.suo
+
+# Node modules and build
+node_modules/
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# React Vite
+.env.local
+.env.*.local

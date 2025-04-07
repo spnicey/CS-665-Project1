@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ArcadeApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5fd1b1688d1cbedae8e93d96efa1fabb5b4e6589")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cec11b751496b34c5980abf247f4a2ceb40e0537")]
 [assembly: System.Reflection.AssemblyProductAttribute("ArcadeApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ArcadeApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
