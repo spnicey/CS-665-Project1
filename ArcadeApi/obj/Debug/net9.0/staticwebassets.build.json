@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "Ld6XuXtZVswG0c7775bI0kT5HKRHUn+DTm1eCqrCmns=",
+  "Source": "ArcadeApi",
+  "BasePath": "_content/ArcadeApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
