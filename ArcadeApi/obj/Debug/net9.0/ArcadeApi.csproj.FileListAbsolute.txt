@@ -157,3 +157,17 @@ C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Proje
 C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\obj\Debug\net9.0\ArcadeApi.pdb
 C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\obj\Debug\net9.0\ArcadeApi.genruntimeconfig.cache
 C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\obj\Debug\net9.0\ref\ArcadeApi.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\Namotion.Reflection.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\Newtonsoft.Json.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\NJsonSchema.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\NJsonSchema.Annotations.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\NJsonSchema.NewtonsoftJson.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\NJsonSchema.Yaml.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\NSwag.Annotations.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\NSwag.AspNetCore.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\NSwag.Core.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\NSwag.Core.Yaml.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\NSwag.Generation.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\NSwag.Generation.AspNetCore.dll
+C:\Users\j3sse\OneDrive - Wichita State University\CS 665 DatabaseConcepts\Project1\ArcadeApi\bin\Debug\net9.0\YamlDotNet.dll
