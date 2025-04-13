@@ -5,16 +5,19 @@ import {
     IconButton
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Player } from '../../types/api';
 import { playerService } from '../../services/api';
 import { PlayerForm } from './PlayerForm';
 import { PlayerEditDialog } from './PlayerEditDialog';
+import { DeleteConfirmDialog } from '../common/DeleteConfirmDialog';
 
 export const PlayerList = () => {
     const [players, setPlayers] = useState<Player[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
+    const [deletingPlayer, setDeletingPlayer] = useState<Player | null>(null);
 
     const loadPlayers = () => {
         setLoading(true);
@@ -51,6 +54,15 @@ export const PlayerList = () => {
         }
     };
 
+    const handleDelete = async (player: Player) => {
+        try {
+            await playerService.delete(player.playerID);
+            loadPlayers();
+        } catch (err) {
+            setError('Failed to delete player');
+        }
+    };
+
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">{error}</Alert>;
 
@@ -82,6 +94,12 @@ export const PlayerList = () => {
                                     <IconButton onClick={() => setEditingPlayer(player)}>
                                         <EditIcon />
                                     </IconButton>
+                                    <IconButton 
+                                        onClick={() => setDeletingPlayer(player)}
+                                        color="error"
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -97,6 +115,18 @@ export const PlayerList = () => {
                     onSave={handleUpdatePlayer}
                 />
             )}
+
+            <DeleteConfirmDialog
+                open={!!deletingPlayer}
+                title={`Are you sure you want to delete ${deletingPlayer?.name}?`}
+                onClose={() => setDeletingPlayer(null)}
+                onConfirm={() => {
+                    if (deletingPlayer) {
+                        handleDelete(deletingPlayer);
+                        setDeletingPlayer(null);
+                    }
+                }}
+            />
         </div>
     );
 };

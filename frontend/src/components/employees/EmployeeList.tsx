@@ -5,16 +5,19 @@ import {
     IconButton
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Employee } from '../../types/api';
 import { employeeService } from '../../services/api';
 import { EmployeeForm } from './EmployeeForm';
 import { EmployeeEditDialog } from './EmployeeEditDialog';
+import { DeleteConfirmDialog } from '../common/DeleteConfirmDialog';
 
 export const EmployeeList = () => {
     const [employees, setEmployees] = useState<Employee[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
+    const [deletingEmployee, setDeletingEmployee] = useState<Employee | null>(null);
 
     const loadEmployees = () => {
         setLoading(true);
@@ -51,6 +54,15 @@ export const EmployeeList = () => {
         }
     };
 
+    const handleDelete = async (employee: Employee) => {
+        try {
+            await employeeService.delete(employee.employeeID);
+            loadEmployees();
+        } catch (err) {
+            setError('Failed to delete employee');
+        }
+    };
+
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">{error}</Alert>;
 
@@ -82,6 +94,12 @@ export const EmployeeList = () => {
                                     <IconButton onClick={() => setEditingEmployee(employee)}>
                                         <EditIcon />
                                     </IconButton>
+                                    <IconButton 
+                                        onClick={() => setDeletingEmployee(employee)}
+                                        color="error"
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -97,6 +115,18 @@ export const EmployeeList = () => {
                     onSave={handleUpdateEmployee}
                 />
             )}
+
+            <DeleteConfirmDialog
+                open={!!deletingEmployee}
+                title={`Are you sure you want to delete ${deletingEmployee?.name}?`}
+                onClose={() => setDeletingEmployee(null)}
+                onConfirm={() => {
+                    if (deletingEmployee) {
+                        handleDelete(deletingEmployee);
+                        setDeletingEmployee(null);
+                    }
+                }}
+            />
         </div>
     );
 };

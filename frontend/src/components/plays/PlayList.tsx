@@ -5,16 +5,19 @@ import {
     IconButton
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Play } from '../../types/api';
 import { playService } from '../../services/api';
 import { PlayForm } from './PlayForm';
 import { PlayEditDialog } from './PlayEditDialog';
+import { DeleteConfirmDialog } from '../common/DeleteConfirmDialog';
 
 export const PlayList = () => {
     const [plays, setPlays] = useState<Play[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [editingPlay, setEditingPlay] = useState<Play | null>(null);
+    const [deletingPlay, setDeletingPlay] = useState<Play | null>(null);
 
     const loadPlays = () => {
         setLoading(true);
@@ -53,6 +56,15 @@ export const PlayList = () => {
         }
     };
 
+    const handleDelete = async (play: Play) => {
+        try {
+            await playService.delete(play.playID);
+            loadPlays();
+        } catch (err) {
+            setError('Failed to delete play');
+        }
+    };
+
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">{error}</Alert>;
 
@@ -84,6 +96,12 @@ export const PlayList = () => {
                                     <IconButton onClick={() => setEditingPlay(play)}>
                                         <EditIcon />
                                     </IconButton>
+                                    <IconButton 
+                                        onClick={() => setDeletingPlay(play)}
+                                        color="error"
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -99,6 +117,18 @@ export const PlayList = () => {
                     onSave={handleUpdatePlay}
                 />
             )}
+
+            <DeleteConfirmDialog
+                open={!!deletingPlay}
+                title={`Are you sure you want to delete this play record?`}
+                onClose={() => setDeletingPlay(null)}
+                onConfirm={() => {
+                    if (deletingPlay) {
+                        handleDelete(deletingPlay);
+                        setDeletingPlay(null);
+                    }
+                }}
+            />
         </div>
     );
 };
