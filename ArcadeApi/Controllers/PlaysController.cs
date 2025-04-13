@@ -97,14 +97,17 @@ namespace ArcadeApi.Controllers
                     return BadRequest("Player not found");
                 }
 
+                // Calculate cost based on membership level
+                float finalCost = CalculateDiscountedCost(game, player.Membership);
+
                 // Check if player has enough balance
-                if (player.Balance < game.Cost)
+                if (player.Balance < finalCost)
                 {
-                    return BadRequest("Insufficient balance");
+                    return BadRequest($"Insufficient balance. Required: ${finalCost:F2}");
                 }
 
                 // Update player's balance
-                player.Balance -= game.Cost;
+                player.Balance -= finalCost;
                 _context.Entry(player).State = EntityState.Modified;
 
                 // Add the play record
@@ -117,6 +120,29 @@ namespace ArcadeApi.Controllers
             {
                 _logger.LogError(ex, "Error creating play record");
                 return StatusCode(500, new { error = "Failed to create play record", details = ex.Message });
+            }
+        }
+
+        private float CalculateDiscountedCost(Game game, int membershipLevel)
+        {
+            switch (membershipLevel)
+            {
+                case 0: // Basic
+                    return game.Cost;
+
+                case 1: // Premium
+                    return game.Cost * 0.5f; // 50% off all games
+
+                case 2: // VIP
+                    // Free for classic games, 50% off others
+                    if (game.Type.ToLower() == "classic")
+                    {
+                        return 0;
+                    }
+                    return game.Cost * 0.5f;
+
+                default:
+                    return game.Cost;
             }
         }
 

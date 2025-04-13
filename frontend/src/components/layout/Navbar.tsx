@@ -24,6 +24,9 @@ export const Navbar = () => {
                     <Button color="inherit" component={RouterLink} to="/highscores">
                         High Scores
                     </Button>
+                    <Button color="inherit" component={RouterLink} to="/about">
+                        About
+                    </Button>
                 </Toolbar>
             </Container>
         </AppBar>
