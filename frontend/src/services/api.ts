@@ -34,3 +34,19 @@ export const employeeService = {
         api.put<void>(`/employees/${id}`, employee),
     delete: (id: number) => api.delete<void>(`/employees/${id}`)
 };
+
+export const playService = {
+    getAll: () => api.get<Play[]>('/plays').then(res => res.data),
+    getById: (id: number) => api.get<Play>(`/plays/${id}`).then(res => res.data),
+    create: (play: Omit<Play, 'playID'>) => 
+        api.post<Play>('/plays', play)
+            .then(res => res.data)
+            .catch(error => {
+                console.log('Request data:', play);
+                console.log('Error response:', error.response?.data);
+                throw error;
+            }),
+    update: (id: number, play: Play) => 
+        api.put<void>(`/plays/${id}`, play),
+    delete: (id: number) => api.delete<void>(`/plays/${id}`)
+};

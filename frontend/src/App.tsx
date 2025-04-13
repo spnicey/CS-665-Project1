@@ -7,6 +7,7 @@ import { Navbar } from './components/layout/Navbar';
 import { PlayerList } from './components/players/PlayerList';
 import { GameList } from './components/games/GameList';
 import { EmployeeList } from './components/employees/EmployeeList';
+import { PlayList } from './components/plays/PlayList';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                     <Route path="/players" element={<PlayerList />} />
                     <Route path="/games" element={<GameList />} />
                     <Route path="/employees" element={<EmployeeList />} />
+                    <Route path="/plays" element={<PlayList />} />
                 </Routes>
             </Container>
         </Router>
