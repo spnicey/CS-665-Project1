@@ -38,12 +38,12 @@ export const PlayList = () => {
 
     const handleAddPlay = async (play: Omit<Play, 'playID'>) => {
         try {
-            console.log('Creating play:', play);
             await playService.create(play);
             loadPlays();
-        } catch (err) {
+        } catch (err: any) {
             console.error('Error creating play:', err);
-            setError('Failed to create play');
+            // Show the error message from the API if available
+            setError(err.response?.data?.error || 'Failed to create play');
         }
     };
 

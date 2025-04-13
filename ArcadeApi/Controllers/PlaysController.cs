@@ -81,9 +81,43 @@ namespace ArcadeApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Play>> PostPlay(Play play)
         {
-            _context.Plays.Add(play);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetPlay), new { id = play.PlayID }, play);
+            try
+            {
+                // Get the game to check its cost
+                var game = await _context.Games.FindAsync(play.GameID);
+                if (game == null)
+                {
+                    return BadRequest("Game not found");
+                }
+
+                // Get the player to check and update balance
+                var player = await _context.Players.FindAsync(play.PlayerID);
+                if (player == null)
+                {
+                    return BadRequest("Player not found");
+                }
+
+                // Check if player has enough balance
+                if (player.Balance < game.Cost)
+                {
+                    return BadRequest("Insufficient balance");
+                }
+
+                // Update player's balance
+                player.Balance -= game.Cost;
+                _context.Entry(player).State = EntityState.Modified;
+
+                // Add the play record
+                _context.Plays.Add(play);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(GetPlay), new { id = play.PlayID }, play);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating play record");
+                return StatusCode(500, new { error = "Failed to create play record", details = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]

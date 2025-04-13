@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { 
     Table, TableBody, TableCell, TableContainer, TableHead, 
     TableRow, Paper, CircularProgress, Alert, Typography,
-    IconButton
+    IconButton, TextField, FormControl, InputLabel, Select, 
+    MenuItem, Box, Stack
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -18,6 +19,9 @@ export const GameList = () => {
     const [error, setError] = useState<string | null>(null);
     const [editingGame, setEditingGame] = useState<Game | null>(null);
     const [deletingGame, setDeletingGame] = useState<Game | null>(null);
+    const [nameFilter, setNameFilter] = useState('');
+    const [idFilter, setIdFilter] = useState('');
+    const [typeFilter, setTypeFilter] = useState('');
 
     const loadGames = () => {
         setLoading(true);
@@ -63,15 +67,51 @@ export const GameList = () => {
         }
     };
 
+    const filteredGames = games.filter(game => {
+        const matchesName = game.name.toLowerCase().includes(nameFilter.toLowerCase());
+        const matchesId = idFilter === '' || game.gameID.toString() === idFilter;
+        const matchesType = typeFilter === '' || game.type.toLowerCase().includes(typeFilter.toLowerCase());
+        return matchesName && matchesId && matchesType;
+    });
+
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">{error}</Alert>;
 
     return (
         <div>
             <Typography variant="h4" sx={{ my: 2 }}>Games</Typography>
+            
             <Paper sx={{ p: 2, mb: 2 }}>
                 <GameForm onSubmit={handleAddGame} />
             </Paper>
+
+            <Paper sx={{ p: 2, mb: 2 }}>
+                <Stack spacing={2}>
+                    <Typography variant="h6">Filters</Typography>
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                        <TextField
+                            label="Search by Name"
+                            value={nameFilter}
+                            onChange={(e) => setNameFilter(e.target.value)}
+                            size="small"
+                        />
+                        <TextField
+                            label="Search by ID"
+                            value={idFilter}
+                            onChange={(e) => setIdFilter(e.target.value)}
+                            size="small"
+                            type="number"
+                        />
+                        <TextField
+                            label="Search by Type"
+                            value={typeFilter}
+                            onChange={(e) => setTypeFilter(e.target.value)}
+                            size="small"
+                        />
+                    </Box>
+                </Stack>
+            </Paper>
+
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
@@ -84,7 +124,7 @@ export const GameList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {games.map(game => (
+                        {filteredGames.map(game => (
                             <TableRow key={game.gameID}>
                                 <TableCell>{game.gameID}</TableCell>
                                 <TableCell>{game.name}</TableCell>
@@ -103,6 +143,13 @@ export const GameList = () => {
                                 </TableCell>
                             </TableRow>
                         ))}
+                        {filteredGames.length === 0 && (
+                            <TableRow>
+                                <TableCell colSpan={5} align="center">
+                                    No games match the current filters
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>
