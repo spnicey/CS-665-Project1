@@ -52,6 +52,7 @@ export const GameForm = ({ initialValues, onSubmit }: GameFormProps) => {
             <TextField
                 label="Cost"
                 type="number"
+                inputProps={{ step: "0.01" }}  // Add this line to support decimals
                 value={cost}
                 onChange={(e) => setCost(e.target.value)}
                 required

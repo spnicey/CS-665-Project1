@@ -54,6 +54,7 @@ export const PlayerForm = ({ initialValues, onSubmit }: PlayerFormProps) => {
                 <TextField
                     label="Balance"
                     type="number"
+                    inputProps={{ step: "0.01" }}  // Add this line to support decimals
                     value={balance}
                     onChange={(e) => setBalance(e.target.value)}
                     required
