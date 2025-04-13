@@ -1,14 +1,14 @@
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Box, Container } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 export const Navbar = () => {
     return (
         <AppBar position="static">
-            <Toolbar>
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    Arcade Manager
-                </Typography>
-                <Box sx={{ display: 'flex', gap: 2 }}>
+            <Container>
+                <Toolbar>
+                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                        Arcade Manager
+                    </Typography>
                     <Button color="inherit" component={RouterLink} to="/players">
                         Players
                     </Button>
@@ -21,8 +21,11 @@ export const Navbar = () => {
                     <Button color="inherit" component={RouterLink} to="/employees">
                         Employees
                     </Button>
-                </Box>
-            </Toolbar>
+                    <Button color="inherit" component={RouterLink} to="/highscores">
+                        High Scores
+                    </Button>
+                </Toolbar>
+            </Container>
         </AppBar>
     );
 };

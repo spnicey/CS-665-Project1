@@ -8,6 +8,7 @@ import { PlayerList } from './components/players/PlayerList';
 import { GameList } from './components/games/GameList';
 import { EmployeeList } from './components/employees/EmployeeList';
 import { PlayList } from './components/plays/PlayList';
+import { HighScoreList } from './components/highscores/HighScoreList';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/games" element={<GameList />} />
                     <Route path="/employees" element={<EmployeeList />} />
                     <Route path="/plays" element={<PlayList />} />
+                    <Route path="/highscores" element={<HighScoreList />} />
                 </Routes>
             </Container>
         </Router>
