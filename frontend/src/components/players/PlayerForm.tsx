@@ -1,15 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TextField, Button, Box, Paper } from '@mui/material';
 import { Player } from '../../types/api';
 
 interface PlayerFormProps {
+    initialValues?: Player;
     onSubmit: (player: Omit<Player, 'playerID'>) => void;
 }
 
-export const PlayerForm = ({ onSubmit }: PlayerFormProps) => {
-    const [name, setName] = useState('');
-    const [membership, setMembership] = useState('0');
-    const [balance, setBalance] = useState('0');
+export const PlayerForm = ({ initialValues, onSubmit }: PlayerFormProps) => {
+    const [name, setName] = useState(initialValues?.name ?? '');
+    const [membership, setMembership] = useState(initialValues?.membership?.toString() ?? '0');
+    const [balance, setBalance] = useState(initialValues?.balance?.toString() ?? '0');
+
+    useEffect(() => {
+        if (initialValues) {
+            setName(initialValues.name);
+            setMembership(initialValues.membership.toString());
+            setBalance(initialValues.balance.toString());
+        }
+    }, [initialValues]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -18,9 +27,12 @@ export const PlayerForm = ({ onSubmit }: PlayerFormProps) => {
             membership: parseInt(membership),
             balance: parseFloat(balance)
         });
-        setName('');
-        setMembership('0');
-        setBalance('0');
+
+        if (!initialValues) {
+            setName('');
+            setMembership('0');
+            setBalance('0');
+        }
     };
 
     return (
@@ -46,7 +58,9 @@ export const PlayerForm = ({ onSubmit }: PlayerFormProps) => {
                     onChange={(e) => setBalance(e.target.value)}
                     required
                 />
-                <Button type="submit" variant="contained">Add Player</Button>
+                <Button type="submit" variant="contained">
+                    {initialValues ? 'Update Player' : 'Add Player'}
+                </Button>
             </Box>
         </Paper>
     );

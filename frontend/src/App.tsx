@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container } from '@mui/material';
 import { Navbar } from './components/layout/Navbar';
 import { PlayerList } from './components/players/PlayerList';
+import { GameList } from './components/games/GameList';
+import { EmployeeList } from './components/employees/EmployeeList';
 
 function App() {
     return (
@@ -14,7 +16,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<PlayerList />} />
                     <Route path="/players" element={<PlayerList />} />
-                    {/* Add other routes as needed */}
+                    <Route path="/games" element={<GameList />} />
+                    <Route path="/employees" element={<EmployeeList />} />
                 </Routes>
             </Container>
         </Router>

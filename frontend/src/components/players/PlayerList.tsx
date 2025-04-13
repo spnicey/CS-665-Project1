@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import { 
     Table, TableBody, TableCell, TableContainer, TableHead, 
-    TableRow, Paper, CircularProgress, Alert, Typography 
+    TableRow, Paper, CircularProgress, Alert, Typography,
+    IconButton
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 import { Player } from '../../types/api';
 import { playerService } from '../../services/api';
 import { PlayerForm } from './PlayerForm';
+import { PlayerEditDialog } from './PlayerEditDialog';
 
 export const PlayerList = () => {
     const [players, setPlayers] = useState<Player[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
 
     const loadPlayers = () => {
         setLoading(true);
@@ -38,13 +42,24 @@ export const PlayerList = () => {
         }
     };
 
+    const handleUpdatePlayer = async (player: Player) => {
+        try {
+            await playerService.update(player.playerID, player);
+            loadPlayers();
+        } catch (err) {
+            setError('Failed to update player');
+        }
+    };
+
     if (loading) return <CircularProgress />;
     if (error) return <Alert severity="error">{error}</Alert>;
 
     return (
         <div>
             <Typography variant="h4" sx={{ my: 2 }}>Players</Typography>
-            <PlayerForm onSubmit={handleAddPlayer} />
+            <Paper sx={{ p: 2, mb: 2 }}>
+                <PlayerForm onSubmit={handleAddPlayer} />
+            </Paper>
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
@@ -53,6 +68,7 @@ export const PlayerList = () => {
                             <TableCell>Name</TableCell>
                             <TableCell>Membership</TableCell>
                             <TableCell>Balance</TableCell>
+                            <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -62,11 +78,25 @@ export const PlayerList = () => {
                                 <TableCell>{player.name}</TableCell>
                                 <TableCell>{player.membership}</TableCell>
                                 <TableCell>${player.balance.toFixed(2)}</TableCell>
+                                <TableCell>
+                                    <IconButton onClick={() => setEditingPlayer(player)}>
+                                        <EditIcon />
+                                    </IconButton>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            {editingPlayer && (
+                <PlayerEditDialog
+                    open={true}
+                    player={editingPlayer}
+                    onClose={() => setEditingPlayer(null)}
+                    onSave={handleUpdatePlayer}
+                />
+            )}
         </div>
     );
 };
